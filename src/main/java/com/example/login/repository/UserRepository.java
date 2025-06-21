@@ -6,9 +6,9 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-    // 根据手机号查询用户
-    User findByPhone(String phone);
+    // 根据用户名查询用户
+    User findByUsername(String username);
     
-    // 检查手机号是否存在
-    boolean existsByPhone(String phone);
+    // 检查用户名是否存在
+    boolean existsByUsername(String username);
 } 
