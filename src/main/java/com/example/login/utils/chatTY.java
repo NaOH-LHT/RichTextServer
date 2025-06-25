@@ -18,7 +18,7 @@ import java.util.Arrays;
 
 public class chatTY {
     // 这样加上密钥即可 ！！！
-    private static String API_KEY = "请输入你的密钥";
+    private static String API_KEY = "sk-530aea6c5e474973a3f67e4f0458f5a7";
 
     public static String getResult(String message)
             throws ApiException, NoApiKeyException, InputRequiredException {

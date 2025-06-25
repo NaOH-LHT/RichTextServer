@@ -21,6 +21,7 @@ public class SummaryController {
             String content = request.get("content");
             System.out.println("接收到的 content: " + content); // 打印日志确认
             return AI.getSummary(content);
+//            return "test";
         } catch (Exception e) {
             e.printStackTrace();
             return "error";
