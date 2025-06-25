@@ -1,6 +1,8 @@
 package com.example.login.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -143,6 +145,26 @@ public class UserController {
             response.put("message", "查询失败: " + e.getMessage());
         }
 
+        return response;
+    }
+
+    //查询所有昵称
+    @GetMapping("/user/all")
+    public Map<String, Object> getAllUsers() {
+        Map<String, Object> response = new HashMap<>();
+        try {
+            Iterable<User> users = userRepository.findAll();
+            List<String> Nicknames = new ArrayList<>();
+            for (User user : users) {
+                System.out.println("Found user: " + user.getNickname());
+                Nicknames.add(user.getNickname());
+            }
+            response.put("success", true);
+            response.put("data",Nicknames);
+        } catch (Exception e) {
+            response.put("success", false);
+            response.put("message", "查询失败: " + e.getMessage());
+        }
         return response;
     }
 }
