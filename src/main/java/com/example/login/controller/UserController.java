@@ -183,6 +183,7 @@ public class UserController {
         Map<String, Object> response = new HashMap<>();
         try {
             List<Document> documents = documentRepository.findTop8ByOrderByAccessTimeDesc();
+            System.out.println("返回文档列表: " + documents); // 日志
             response.put("success", true);
             response.put("data", documents);
         } catch (Exception e) {

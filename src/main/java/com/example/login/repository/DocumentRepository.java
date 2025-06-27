@@ -18,6 +18,6 @@ import com.example.login.entity.Document;
 @Repository
 public interface DocumentRepository extends JpaRepository<Document, Long> {
   // 查询 access_time 最新的8个文档
-  @Query(value = "SELECT * FROM document ORDER BY access_time DESC LIMIT 8", nativeQuery = true)
+  @Query(value = "SELECT * FROM document ORDER BY access_time DESC, doc_id DESC LIMIT 8", nativeQuery = true)
   List<Document> findTop8ByOrderByAccessTimeDesc();
 }
