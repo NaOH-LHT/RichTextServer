@@ -13,6 +13,7 @@
       </jdbc-additional-properties>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+<<<<<<< HEAD
     <data-source source="LOCAL" name="text_db@gz-cdb-73hxuxal.sql.tencentcdb.com" uuid="846c90d3-50d7-479c-a194-752e78d68388">
       <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
@@ -25,6 +26,13 @@
         <property name="com.intellij.clouds.kubernetes.db.enabled" value="false" />
         <property name="com.intellij.clouds.kubernetes.db.container.port" />
       </jdbc-additional-properties>
+=======
+    <data-source source="LOCAL" name="text_db@gz-cdb-73hxuxal.sql.tencentcdb.com" uuid="c1c952aa-3bf4-4e8f-acff-d236454e1686">
+      <driver-ref>mysql.8</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://gz-cdb-73hxuxal.sql.tencentcdb.com:26655/text_db</jdbc-url>
+>>>>>>> 0b6dcb094c7aef562b2cdd08dd375c2b975c546a
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
   </component>

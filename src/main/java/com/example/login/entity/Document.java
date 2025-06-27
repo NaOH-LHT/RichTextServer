@@ -61,4 +61,4 @@ public class Document {
     public void setContent(String content) { this.content = content; }
     public Boolean getIsCollaborative() { return isCollaborative; }
     public void setIsCollaborative(Boolean isCollaborative) { this.isCollaborative = isCollaborative; }
-} 
+}
