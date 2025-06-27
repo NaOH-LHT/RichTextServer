@@ -1,6 +1,8 @@
 package com.example.login.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,14 +33,24 @@ public class UserController {
         System.out.println("登录用户名为：" + loginUser.getUsername());
         User user = userRepository.findByUsername(loginUser.getUsername());
 
+        
         if (user != null && user.getPassword().equals(loginUser.getPassword())) {
+
+            // 创建嵌套的用户信息Map
+            Map<String, Object> userInfo = new HashMap<>();
+            userInfo.put("userId", user.getUserId());
+            userInfo.put("username", user.getUsername());
+            userInfo.put("nickname", user.getNickname());
+            userInfo.put("avatar", user.getAvatar());
+
             response.put("success", true);
             response.put("message", "登录成功");
-            response.put("user", user);
+            response.put("user",userInfo);
         } else {
             response.put("success", false);
             response.put("message", "用户名或密码错误");
         }
+        
 
         return response;
     }
@@ -143,6 +155,26 @@ public class UserController {
             response.put("message", "查询失败: " + e.getMessage());
         }
 
+        return response;
+    }
+
+    //查询所有昵称
+    @GetMapping("/user/all")
+    public Map<String, Object> getAllUsers() {
+        Map<String, Object> response = new HashMap<>();
+        try {
+            Iterable<User> users = userRepository.findAll();
+            List<String> Nicknames = new ArrayList<>();
+            for (User user : users) {
+                System.out.println("Found user: " + user.getNickname());
+                Nicknames.add(user.getNickname());
+            }
+            response.put("success", true);
+            response.put("data",Nicknames);
+        } catch (Exception e) {
+            response.put("success", false);
+            response.put("message", "查询失败: " + e.getMessage());
+        }
         return response;
     }
 }

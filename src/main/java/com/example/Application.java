@@ -1,11 +1,11 @@
-package com.example.login;
+package com.example;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class LoginApplication {
+public class Application {
     public static void main(String[] args) {
-        SpringApplication.run(LoginApplication.class, args);
+        SpringApplication.run(Application.class, args);
     }
 } 
