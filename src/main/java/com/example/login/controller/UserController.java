@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.login.entity.Document;
 import com.example.login.entity.User;
+import com.example.login.repository.DocumentRepository;
 import com.example.login.repository.UserRepository;
 
 @RestController
@@ -25,6 +27,9 @@ public class UserController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private DocumentRepository documentRepository;
 
     @PostMapping("/login")
     public Map<String, Object> login(@RequestBody User loginUser) {
@@ -148,7 +153,7 @@ public class UserController {
         return response;
     }
 
-    //查询所有昵称
+    // 查询所有昵称
     @GetMapping("/user/all")
     public Map<String, Object> getAllUsers() {
         Map<String, Object> response = new HashMap<>();
@@ -160,7 +165,26 @@ public class UserController {
                 Nicknames.add(user.getNickname());
             }
             response.put("success", true);
-            response.put("data",Nicknames);
+            response.put("data", Nicknames);
+        } catch (Exception e) {
+            response.put("success", false);
+            response.put("message", "查询失败: " + e.getMessage());
+        }
+        return response;
+    }
+
+    /**
+     * 获取最近访问的8个文档
+     * 
+     * @return 包含文档列表的Map
+     */
+    @GetMapping("/user/recent-documents")
+    public Map<String, Object> getRecentDocuments() {
+        Map<String, Object> response = new HashMap<>();
+        try {
+            List<Document> documents = documentRepository.findTop8ByOrderByAccessTimeDesc();
+            response.put("success", true);
+            response.put("data", documents);
         } catch (Exception e) {
             response.put("success", false);
             response.put("message", "查询失败: " + e.getMessage());
