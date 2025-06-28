@@ -1,6 +1,6 @@
 package com.example.login.controller;
 
-import com.example.login.entity.User;
+import com.example.login.pojo.entity.User;
 import com.example.login.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

@@ -20,7 +20,9 @@ public class SummaryController {
             // 从请求体中获取 content 字段
             String content = request.get("content");
             System.out.println("接收到的 content: " + content); // 打印日志确认
-            return AI.getSummary(content);
+            String result = AI.getSummary(content);
+            System.out.println("AI返回的:"+result);
+            return result;
 //            return "test";
         } catch (Exception e) {
             e.printStackTrace();

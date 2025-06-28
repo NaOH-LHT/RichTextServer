@@ -4,9 +4,11 @@ import com.alibaba.dashscope.exception.InputRequiredException;
 import com.alibaba.dashscope.exception.NoApiKeyException;
 import com.example.login.service.ChatAI;
 import com.example.login.utils.chatTY;
+import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 
+@Service
 public class ChatAIimpl implements ChatAI {
 
     private static chatTY tonyiApi = new chatTY();// 通义千问模型的API接口
