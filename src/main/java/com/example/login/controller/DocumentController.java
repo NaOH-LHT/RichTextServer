@@ -176,10 +176,12 @@ public class DocumentController {
      */
     @GetMapping("/list/{userId}")
     public ApiResponse<Map<String, Object>> getDocumentsByUserId(@PathVariable Long userId) {
+        System.out.println("getDocumentsByUserId");
         return new ApiResponse<>(200, "获取文档列表成功", documentServiceImpl.findByUserId(userId));
     }
     @GetMapping("/list")
     public ApiResponse<Map<String, Object>> getDocumentsAll() {
+        System.out.println("getDocumentsAll");
         return new ApiResponse<>(200, "获取文档列表成功", documentServiceImpl.findByUserId(null));
     }
     @PostMapping("/search")
@@ -201,5 +203,12 @@ public class DocumentController {
     @PostMapping("/rename")
     private Map<String, Object> renameDocument(@RequestParam String oldName, @RequestParam String newName){
         return documentServiceImpl.renameDocument(oldName, newName);
+    }
+
+    //通过知识库查找文档
+    @GetMapping("/knowledge-base/{knowledgeBaseId}")
+    public ApiResponse<Map<String, Object>> getDocumentsByKnowledgeBaseId(@PathVariable Long knowledgeBaseId) {
+        System.out.println("========getDocumentsByKnowledgeBaseId============");
+        return new ApiResponse<>(200, "根据知识库查询文档成功", documentServiceImpl.findByKnowledgeBaseId(knowledgeBaseId));
     }
 }

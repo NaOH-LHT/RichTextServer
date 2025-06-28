@@ -36,4 +36,7 @@ public interface DocumentRepository extends JpaRepository<Document, Long> {
 
     @Query(value = "SELECT * FROM document ORDER BY access_time DESC, doc_id DESC LIMIT 8", nativeQuery = true)
     List<Document> findTop8ByOrderByAccessTimeDesc();
+
+    //根据知识库查文档
+    List<Document> findByKbId(Long kbId);
 }
