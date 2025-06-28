@@ -21,4 +21,7 @@ public interface DocumentRepository extends JpaRepository<Document, Long> {
     @Transactional
     @Query(value = "update document set access_time = NOW() where doc_id = ?1", nativeQuery = true)
     void updateAccessedAt(Long id);
+
+    @Query(value = "SELECT * FROM document ORDER BY access_time DESC, doc_id DESC LIMIT 8", nativeQuery = true)
+    List<Document> findTop8ByOrderByAccessTimeDesc();
 }

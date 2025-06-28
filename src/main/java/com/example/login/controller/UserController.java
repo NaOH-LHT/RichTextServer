@@ -181,4 +181,19 @@ public class UserController {
         }
         return response;
     }
+
+    @GetMapping("/user/recent-documents")
+    public Map<String, Object> getRecentDocuments() {
+        Map<String, Object> response = new HashMap<>();
+        try {
+            List<Document> documents = documentRepository.findTop8ByOrderByAccessTimeDesc();
+            System.out.println("返回文档列表: " + documents); // 日志
+            response.put("success", true);
+            response.put("data", documents);
+        } catch (Exception e) {
+            response.put("success", false);
+            response.put("message", "查询失败: " + e.getMessage());
+        }
+        return response;
+    }
 }
