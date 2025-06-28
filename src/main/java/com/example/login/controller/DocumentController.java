@@ -49,13 +49,20 @@ public class DocumentController {
             doc.setIsCollaborative(Boolean.parseBoolean(body.get("isCollaborative").toString()));
             Document saved = documentRepository.save(doc);
 
-            Map<String, Object> data = new HashMap<>();
-            data.put("doc_id", saved.getDocId());
-            data.put("doc_name", saved.getDocName());
-            data.put("kb_id", saved.getKbId());
-            data.put("user_id", saved.getUserId());
+            Map<String, Object> map = new HashMap<>();
 
-            return new ApiResponse<>(200, "文档创建成功", data);
+            map.put("name", doc.getDocName());
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            map.put("date", doc.getAccessTime() != null ? sdf.format(doc.getAccessTime()) : "");
+            map.put("owner",userRepository.findByUserId(doc.getUserId()).getNickname());
+            map.put("ownerId", doc.getUserId());
+            map.put("id",doc.getDocId());
+            map.put("accessTime", sdf.format(doc.getAccessTime()) );
+            map.put("create_time",sdf.format( doc.getCreateTime()));
+            map.put("isCollaborative", doc.getIsCollaborative());
+
+
+            return new ApiResponse<>(200, "文档创建成功", map);
         } catch (Exception e) {
             e.printStackTrace();
             return new ApiResponse<>(500, "文档创建失败: " + e.getMessage(), null);
@@ -176,6 +183,26 @@ public class DocumentController {
     public ApiResponse<Map<String, Object>> getDocumentsAll() {
         System.out.println("getDocumentsAll");
         return new ApiResponse<>(200, "获取文档列表成功", documentServiceImpl.findByUserId(null));
+    }
+    @PostMapping("/search")
+    public ApiResponse<Map<String, Object>> searchDocument(@RequestBody Map<String, Object> body,@RequestParam Long userId) {
+        Map<String, Object> response = new HashMap<>();
+        response.put("list", documentServiceImpl.searchDocument((String)body.get("docName"),(String)body.get("nickName"),(String)body.get("begin"),(String)body.get("end"),userId));
+        return new ApiResponse<>(200, "筛选文档列表成功", response);
+    }
+
+
+
+    // 删除文档
+    @PostMapping("/delete")
+    private Map<String, Object> deleteDocument(@RequestParam String name){
+        return documentServiceImpl.deleteDocument(name);
+    }
+
+    // 重命名文档
+    @PostMapping("/rename")
+    private Map<String, Object> renameDocument(@RequestParam String oldName, @RequestParam String newName){
+        return documentServiceImpl.renameDocument(oldName, newName);
     }
 
     //通过知识库查找文档
