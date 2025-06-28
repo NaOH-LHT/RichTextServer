@@ -38,6 +38,24 @@ public class DocumentServiceImpl {
         }
         Map<String, Object> response = new HashMap<>();
         response.put("list", result);
+        System.out.println("查询到的文档数量为：" + result.size());
         return response;
+    }
+
+    public Map<String, Object> findByKnowledgeBaseId(Long knowledgeBaseId) {
+        List<Document> docs = documentRepository.findByKbId(knowledgeBaseId);
+        List<Map<String, Object>> result = new ArrayList<>();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        for (Document doc : docs) {
+            Map<String, Object> map = new HashMap<>();
+            map.put("name", doc.getDocName());
+            map.put("date", doc.getAccessTime() != null ? sdf.format(doc.getAccessTime()) : "");
+            map.put("owner",userRepository.findByUserId(doc.getUserId()).getNickname());
+            result.add(map);
+        }
+        Map<String, Object> response = new HashMap<>();
+        response.put("list", result);
+        return response;
+
     }
 }
