@@ -78,4 +78,3 @@ public class EditRight {
         return "EditRight{rightId = " + rightId + ", userId = " + userId + ", kbId = " + kbId + "}";
     }
 }
-

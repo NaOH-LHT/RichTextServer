@@ -15,9 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.login.entity.Document;
 import com.example.login.entity.User;
-import com.example.login.repository.DocumentRepository;
 import com.example.login.repository.UserRepository;
 
 @RestController
@@ -27,9 +25,6 @@ public class UserController {
 
     @Autowired
     private UserRepository userRepository;
-
-    @Autowired
-    private DocumentRepository documentRepository;
 
     @PostMapping("/login")
     public Map<String, Object> login(@RequestBody User loginUser) {
@@ -162,6 +157,7 @@ public class UserController {
 
         return response;
     }
+
     //查询所有昵称
     @GetMapping("/user/all")
     public Map<String, Object> getAllUsers() {
