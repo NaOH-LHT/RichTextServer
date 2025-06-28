@@ -16,7 +16,9 @@ public class KnowledgeBase {
     @Column(name = "user_id")
     private Long userId;
 
+
     @Column(name = "create_time")
+
     private String createTime;
 
     @Column(name = "access_time")
@@ -137,4 +139,6 @@ public class KnowledgeBase {
     public String toString() {
         return "KnowledgeBase{kbId = " + kbId + ", kbName = " + kbName + ", userId = " + userId + ", createTime = " + createTime + ", accessTime = " + accessTime + ", userName = " + userName + "}";
     }
+
 }
+

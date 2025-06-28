@@ -252,8 +252,10 @@ public class KBServiceImpl implements KBService {
         // 为每个知识库设置user_name
         for (KnowledgeBase kb : kbList) {
             String nickname = userRespository.findById(kb.getUserId())
+
                     .map(User::getNickname)
                     .orElse("default_nickname");
+
             kb.setUserName(nickname);
         }
 

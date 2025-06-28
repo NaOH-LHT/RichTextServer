@@ -21,4 +21,4 @@ public interface DocumentRepository extends JpaRepository<Document, Long> {
     @Transactional
     @Query(value = "update document set access_time = NOW() where doc_id = ?1", nativeQuery = true)
     void updateAccessedAt(Long id);
-} 
+}
