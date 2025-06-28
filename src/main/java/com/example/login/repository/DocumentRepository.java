@@ -16,6 +16,18 @@ public interface DocumentRepository extends JpaRepository<Document, Long> {
 
     List<Document> findByUserId(Long userId);
     List<Document> findAll();
+    
+    // 根据文档名查找文档
+    Document findByDocName(String docName);
+
+    // 根据知识库id查找文档
+    List<Document> findBykbId(Long kbId);
+    
+    // 根据文档名删除文档
+    @Modifying
+    @Transactional
+    void deleteByDocName(String docName);
+    
     // 更新文档访问时间
     @Modifying
     @Transactional
