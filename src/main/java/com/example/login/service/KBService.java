@@ -16,4 +16,6 @@ public interface KBService {
     Map<String, Object> queryKnowledgeBase(String name, String owner, String startDate, String endDate);
 
     Map<String,Object> queryRightKnowledgeBase(Long userId);
+
+    void updateAccessTime(Long kbId);
 }

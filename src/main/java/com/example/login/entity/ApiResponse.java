@@ -17,4 +17,19 @@ public class ApiResponse<T> {
     public void setMsg(String msg) { this.msg = msg; }
     public T getData() { return data; }
     public void setData(T data) { this.data = data; }
+
+    // 成功响应
+    public static <T> ApiResponse<T> success(T data) {
+        return new ApiResponse<>(1,"success",data);
+    }
+
+    // 成功响应，带提示信息和数据
+    public static <T> ApiResponse<T> success(String message, T data) {
+        return new ApiResponse<>(1, message, data);
+    }
+
+    //响应失败
+    public static <T> ApiResponse<T> fail(String message) {
+        return new ApiResponse<>(0,message,null);
+    }
 } 
