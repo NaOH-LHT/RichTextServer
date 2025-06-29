@@ -266,4 +266,20 @@ public class KBServiceImpl implements KBService {
         result.put("data", kbList);
         return result;
     }
+
+    @Override
+    public Map<String, Object> queryRightKnowledgeBase(Long userId) {
+        Map<String, Object> result = new HashMap<>();
+        System.out.println("=== 收到查询权限知识库请求 ===");
+        // 构造返回结果
+        List<EditRight> rightList = editRightRepository.findByUserId(userId);
+        List<KnowledgeBase> kbList = new ArrayList<>();
+        for(EditRight editRight : rightList) {
+            kbList.add(kbRepository.findByKbId(editRight.getKbId()));
+        }
+        result.put("success", true);
+        result.put("message", "查询成功");
+        result.put("data", kbList);
+        return result;
+    }
 }

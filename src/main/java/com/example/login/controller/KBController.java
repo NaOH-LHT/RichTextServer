@@ -54,4 +54,9 @@ public class KBController {
                                                    @RequestParam String endDate){
         return kbService.queryKnowledgeBase(name, owner, startDate, endDate);
     }
+
+    @GetMapping("/searchRight")
+    private Map<String, Object> queryKnowledgeBaseid(@RequestParam Long userId){
+        return kbService.queryRightKnowledgeBase(userId);
+    }
 }
