@@ -266,4 +266,26 @@ public class KBServiceImpl implements KBService {
         result.put("data", kbList);
         return result;
     }
+
+    @Override
+    public void updateAccessTime(Long kbId) {
+        System.out.println("=== 更新知识库访问时间 ===");
+        System.out.println("知识库ID: " + kbId);
+
+        // 查找知识库
+        KnowledgeBase knowledgeBase = kbRepository.findByKbId(kbId);
+        if (knowledgeBase == null) {
+            System.out.println("未找到ID为 " + kbId + " 的知识库");
+            return;
+        }
+
+        // 更新访问时间为当前时间
+        String currentTime = new java.text.SimpleDateFormat("yyyy-MM-dd").format(new Date());
+        knowledgeBase.setAccessTime(currentTime);
+        kbRepository.save(knowledgeBase);
+
+        System.out.println("知识库访问时间已更新为：" + currentTime);
+    }
+
+
 }

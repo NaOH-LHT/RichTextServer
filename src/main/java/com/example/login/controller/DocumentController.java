@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.example.login.service.impl.KBServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,6 +36,9 @@ public class DocumentController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private KBServiceImpl kbServiceImpl;
 
     // 创建文档
     @PostMapping("/create")
@@ -216,6 +220,7 @@ public class DocumentController {
     @GetMapping("/knowledge-base/{knowledgeBaseId}")
     public ApiResponse<Map<String, Object>> getDocumentsByKnowledgeBaseId(@PathVariable Long knowledgeBaseId) {
         System.out.println("========getDocumentsByKnowledgeBaseId============");
+        kbServiceImpl.updateAccessTime(knowledgeBaseId);
         return new ApiResponse<>(200, "根据知识库查询文档成功", documentServiceImpl.findByKnowledgeBaseId(knowledgeBaseId));
     }
 }

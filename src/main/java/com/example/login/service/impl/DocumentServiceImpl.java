@@ -213,6 +213,11 @@ public class DocumentServiceImpl implements DocumentService {
             map.put("name", doc.getDocName());
             map.put("date", doc.getAccessTime() != null ? sdf.format(doc.getAccessTime()) : "");
             map.put("owner", userRepository.findByUserId(doc.getUserId()).getNickname());
+            map.put("ownerId", doc.getUserId());
+            map.put("id", doc.getDocId());
+            map.put("accessTime", sdf.format(doc.getAccessTime()));
+            map.put("create_time", sdf.format(doc.getCreateTime()));
+            map.put("isCollaborative", doc.getIsCollaborative());
             result.add(map);
         }
         Map<String, Object> response = new HashMap<>();
