@@ -22,12 +22,18 @@ public interface DocumentRepository extends JpaRepository<Document, Long> {
 
     // 根据知识库id查找文档
     List<Document> findBykbId(Long kbId);
-    
+
+    Document findBydocId(Long docId);
     // 根据文档名删除文档
     @Modifying
     @Transactional
     void deleteByDocName(String docName);
-    
+
+    // 根据文档名删除文档
+    @Modifying
+    @Transactional
+    void deleteBydocId(Long docId);
+
     // 更新文档访问时间
     @Modifying
     @Transactional

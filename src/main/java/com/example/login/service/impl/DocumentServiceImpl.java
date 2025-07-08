@@ -135,10 +135,10 @@ public class DocumentServiceImpl implements DocumentService {
      */
     public List<Map<String, Object>> searchDocument(String docName, String nickName, String begin, String end,
             Long userId) {
-
+        System.out.println("----------------------------------------------"+begin+end);
         List<Map<String, Object>> documentRight = getDocumentRight(userId);
 
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         List<Map<String, Object>> filteredDocuments = new ArrayList<>();
 
         // 如果所有筛选条件都为空，直接返回所有文档
@@ -224,5 +224,53 @@ public class DocumentServiceImpl implements DocumentService {
         response.put("list", result);
         return response;
 
+    }
+
+    public Map<String, Object> deleteDocumentById(Long docId) {
+        Map<String, Object> result = new HashMap<>();
+        try {
+            Document document = documentRepository.findBydocId(docId);
+            if (document == null) {
+                result.put("success", false);
+                result.put("message", "文档不存在");
+                return result;
+            }
+            documentRepository.deleteBydocId(docId);
+            result.put("success", true);
+            result.put("message", "文档删除成功");
+            return result;
+        } catch (Exception e) {
+            result.put("success", false);
+            result.put("message", "文档删除失败: " + e.getMessage());
+            return result;
+        }
+    }
+
+    public Map<String, Object> renameDocumentById(Long docId, String newName) {
+        Map<String, Object> result = new HashMap<>();
+        try {
+            Document document = documentRepository.findBydocId(docId);
+            if (document == null) {
+                result.put("success", false);
+                result.put("message", "文档不存在");
+                return result;
+            }
+            // 检查新名称是否已存在
+            Document existingDocument = documentRepository.findByDocName(newName);
+            if (existingDocument != null) {
+                result.put("success", false);
+                result.put("message", "新文档名称已存在");
+                return result;
+            }
+            document.setDocName(newName);
+            documentRepository.save(document);
+            result.put("success", true);
+            result.put("message", "文档重命名成功");
+            return result;
+        } catch (Exception e) {
+            result.put("success", false);
+            result.put("message", "文档重命名失败: " + e.getMessage());
+            return result;
+        }
     }
 }

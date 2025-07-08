@@ -244,9 +244,9 @@ public class KBServiceImpl implements KBService {
             }
         }
 
-        // 时间范围过滤（根据创建时间）
+        // 时间范围过滤（根据最后访问时间）
         if (startDate != null && !startDate.isEmpty() && endDate != null && !endDate.isEmpty()) {
-            kbList.removeIf(kb -> kb.getCreateTime().compareTo(startDate) < 0 || kb.getCreateTime().compareTo(endDate) > 0);
+            kbList.removeIf(kb -> kb.getAccessTime().compareTo(startDate) < 0 || kb.getAccessTime().compareTo(endDate) > 0);
         }
 
         // 为每个知识库设置user_name

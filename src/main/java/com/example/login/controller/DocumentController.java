@@ -195,25 +195,29 @@ public class DocumentController {
         return new ApiResponse<>(200, "获取文档列表成功", documentServiceImpl.findByUserId(null));
     }
 
+    //查询文档
     @PostMapping("/search")
     public ApiResponse<Map<String, Object>> searchDocument(@RequestBody Map<String, Object> body,
             @RequestParam Long userId) {
         Map<String, Object> response = new HashMap<>();
-        response.put("list", documentServiceImpl.searchDocument((String) body.get("docName"),
-                (String) body.get("nickName"), (String) body.get("begin"), (String) body.get("end"), userId));
+        response.put("list", documentServiceImpl.searchDocument(
+                (String) body.get("docName"),
+                (String) body.get("nickName"),
+                (String) body.get("begin"),
+                (String) body.get("end"), userId));
         return new ApiResponse<>(200, "筛选文档列表成功", response);
     }
 
     // 删除文档
     @PostMapping("/delete")
-    private Map<String, Object> deleteDocument(@RequestParam String name) {
-        return documentServiceImpl.deleteDocument(name);
+    private Map<String, Object> deleteDocumentBydocId(@RequestParam Long docId) {
+        return documentServiceImpl.deleteDocumentById(docId);
     }
 
     // 重命名文档
     @PostMapping("/rename")
-    private Map<String, Object> renameDocument(@RequestParam String oldName, @RequestParam String newName) {
-        return documentServiceImpl.renameDocument(oldName, newName);
+    private Map<String, Object> renameDocumentBydocId(@RequestParam Long docId, @RequestParam String newName) {
+        return documentServiceImpl.renameDocumentById(docId, newName);
     }
 
     // 通过知识库查找文档
