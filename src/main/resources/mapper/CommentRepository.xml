@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.login.mapper.CommentRepository">
+<resultMap id="commentVoResultMap" type="com.example.login.entity.vo.CommentVO">
+    <id column="id" property="id"/>
+    <result column="parent_id" property="parentId"/>
+    <result column="uid" property="uid"/>
+    <result column="content" property="content"/>
+    <result column="create_time" property="createTime"/>
+    <association property="user">
+        <result column="nickname" property="username"/>
+        <result column="avatar" property="avatar"/>
+    </association>
+</resultMap>
+
+<!-- 查询父评论 -->
+<select id="getParentComments" resultMap="commentVoResultMap">
+    SELECT
+    c.id,
+    c.parent_id AS parentId,
+    c.uid,
+    u.nickname,
+    u.avatar,
+    c.content,
+    c.create_time
+    FROM
+    comments c
+    LEFT JOIN
+    users u ON c.uid = u.user_id
+    WHERE
+    c.text_id = #{textId} AND c.parent_id is null
+    ORDER BY
+    c.create_time DESC
+    LIMIT #{page}, #{pageSize}
+</select>
+
+<!-- 查询子评论 -->
+<select id="getRepliesByParentId" resultMap="commentVoResultMap">
+    SELECT
+    c.id,
+    c.parent_id AS parentId,
+    c.uid,
+    u.nickname,
+    u.avatar,
+    c.content,
+    c.create_time
+    FROM
+    comments c
+    LEFT JOIN
+    users u ON c.uid = u.user_id
+    WHERE
+    c.parent_id is not null AND c.parent_id = #{parentId}
+    ORDER BY
+    c.create_time DESC
+</select>
+</mapper>
